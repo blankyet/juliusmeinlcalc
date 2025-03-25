@@ -21,9 +21,15 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 400px; /* Adjust as needed */
+    width: 25%; /* Default width */
     text-align: center;
     z-index: 1;
+  }
+
+  @media (max-width: 1200px) {
+    .calculator-container {
+      width: 50%; /* Mobile width */
+    }
   }
 
   label {
