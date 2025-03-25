@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Calculator</title>
+<style>
+  body {
+    font-family: Arial;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e8e2da;
+    background-image: url("./background.svg");
+    background-repeat: repeat;
+  }
+
+  .calculator-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 400px; /* Adjust as needed */
+    text-align: center;
+    z-index: 1;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+
+  #result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .logo-img {
+    height: 150px;
+    width: 150px;
+    position: absolute;
+    top: 0;
+    background-image: url("./jm-logo-red.svg");
+    background-size: contain;
+  }
+
+
+
+</style>
+</head>
+<body>
+
+  </style>
+  
+  <a href="https://juliusmeinl.com/ru" title="Go to the Home Page" class="logo-img"></a>
+
+  <div class="calculator-container">
+
+    <h2 style="color: #c0392b;;">Калькулятор</h2>
+
+    <label for="rentMonths">Месяцы аренды:</label>
+    <input type="range" id="rentMonths" min="1" max="12" value="1" oninput="calculate()">
+    <span id="rentMonthsValue">1</span> Месяц(ев)
+
+    <label for="productType">Кофе:</label>
+    <select id="productType" onchange="calculate()">
+      <option value="Uganda">Уганда</option>
+      <option value="Brazil">Бразилия</option>
+      <option value="Ethiopia">Эфиопия</option>
+      <option value="Bristol">Бристоль</option>
+      <option value="Poetry">Поэзия</option>
+    </select>
+
+    <label for="Equipment">Оборудовние:</label>
+    <select id="Equipment" onchange="calculate()">
+      <option value="None">Нет</option>
+      <option value="Automat">Автомат</option>
+    </select>
+
+    <label for="coffeeConsumption">Потребление кофе в месяц (кг):</label>
+    <select id="coffeeConsumption" onchange="calculate()">
+      <option value="5-8">5-8 кг</option>
+      <option value="8-12">8-12 кг</option>
+      <option value="12-20">12-20 кг</option>
+      <option value="20-30">20-30 кг</option>
+      <option value="30-50">30-50 кг</option>
+      <option value="50+">50+ кг</option>
+    </select>
+
+    <div id="result">Результат: 0.00 &#8381;</div>
+  </div>
+
+  <script>
+    function calculate() {
+      const rentMonths = parseInt(document.getElementById("rentMonths").value);
+      document.getElementById("rentMonthsValue").innerText = rentMonths;
+
+      const productType = document.getElementById("productType").value;
+      const Equipment = document.getElementById("Equipment").value;
+      const coffeeConsumption = document.getElementById("coffeeConsumption").value;
+
+      let basePrice = 100_000; // Base price per month (example)
+
+      const productTypeMap = {
+        "Uganda": 1.5,
+        "Brazil": 1.2,
+        "Ethiopia": 1.8,
+        "Bristol": 1.1,
+        "Poetry": 2.0
+      };
+
+      const coffeeConsumptionMap = {
+        "5-8": 1.0,
+        "8-12": 1.2,
+        "12-20": 1.4,
+        "20-30": 1.6,
+        "30-50": 1.8,
+        "50+": 2.0
+      };
+
+      const equipmentMap = {
+        "None": 0.0,
+        "Automat": 10_000
+      };
+      // Calculation
+      let totalPrice = (basePrice + equipmentMap[Equipment]) * coffeeConsumptionMap[coffeeConsumption] * productTypeMap[productType] * rentMonths;
+
+      document.getElementById("result").innerText = "Result: " + totalPrice.toFixed(2) + " ₽";
+    }
+
+    // Initial calculation
+    calculate();
+  </script>
+
+</body>
+</html>
