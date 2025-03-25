@@ -21,14 +21,14 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 25%; /* Default width */
+    width: 400px; /* Default width */
     text-align: center;
     z-index: 1;
   }
 
-  @media (max-width: 1200px) {
+  @media (max-width: 768px) {
     .calculator-container {
-      width: 75%; /* Mobile width */
+      width: 100%;
     }
   }
 
@@ -94,14 +94,20 @@
     </select>
 
 
-    <label for="Automat" style="display: inline-block; width: 200px; text-align: left;">Автомат</label>
-    <input type="number" id="Automat" min="0" max="10" value="0" style="width: 50px;" onchange="calculate()">
-
-    <label for="Odnushka" style="display: inline-block; width: 200px; text-align: left;">Однушка</label>
-    <input type="number" id="Odnushka" min="0" max="10" value="0" style="width: 50px;" onchange="calculate()">
-    <label for="Dvushka" style="display: inline-block; width: 200px; text-align: left;">Двушка</label>
-    <input type="number" id="Dvushka" min="0" max="10" value="0" style="width: 50px;" onchange="calculate()">
-
+    <ul style="list-style: none; padding: 0;">
+      <li>
+        <label for="Automat" style="display: inline-block; width: 200px; text-align: left;">Автомат</label>
+        <input type="number" id="Automat" min="0" max="10" value="0" style="width: 50px;" onchange="calculate()">
+      </li>
+      <li>
+        <label for="Odnushka" style="display: inline-block; width: 200px; text-align: left;">Однушка</label>
+        <input type="number" id="Odnushka" min="0" max="10" value="0" style="width: 50px;" onchange="calculate()">
+      </li>
+      <li>
+        <label for="Dvushka" style="display: inline-block; width: 200px; text-align: left;">Двушка</label>
+        <input type="number" id="Dvushka" min="0" max="10" value="0" style="width: 50px;" onchange="calculate()">
+      </li>
+    </ul>
 
     <label for="coffeeConsumption">Потребление кофе в месяц (кг):</label>
     <select id="coffeeConsumption" onchange="calculate()">
