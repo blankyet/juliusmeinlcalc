@@ -67,16 +67,16 @@
 <body>
 
   </style>
-  
+
   <a href="https://juliusmeinl.com/ru" title="Go to the Home Page" class="logo-img"></a>
 
   <div class="calculator-container">
 
     <h2 style="color: #c0392b;;">Калькулятор</h2>
 
-    <label for="rentMonths">Месяцы аренды:</label>
-    <input type="range" id="rentMonths" min="1" max="12" value="1" oninput="calculate()">
-    <span id="rentMonthsValue">1</span> Месяц(ев)
+    <label for="rentMonthsFrom">Месяцы аренды:</label>
+    <input type="number" id="rentMonthsFrom" min="1" value="1" oninput="calculate()">
+    <input type="number" id="rentMonthsTo" min="1" value="12" oninput="calculate()">
 
     <label for="productType">Кофе:</label>
     <select id="productType" onchange="calculate()">
@@ -87,11 +87,15 @@
       <option value="Poetry">Поэзия</option>
     </select>
 
-    <label for="Equipment">Оборудовние:</label>
-    <select id="Equipment" onchange="calculate()">
-      <option value="None">Нет</option>
-      <option value="Automat">Автомат</option>
-    </select>
+
+    <label for="Automat" style="display: inline-block; width: 200px; text-align: left;">Автомат</label>
+    <input type="number" id="Automat" min="0" max="10" value="0" style="width: 50px;" onchange="calculate()">
+
+    <label for="Odnushka" style="display: inline-block; width: 200px; text-align: left;">Однушка</label>
+    <input type="number" id="Odnushka" min="0" max="10" value="0" style="width: 50px;" onchange="calculate()">
+    <label for="Dvushka" style="display: inline-block; width: 200px; text-align: left;">Двушка</label>
+    <input type="number" id="Dvushka" min="0" max="10" value="0" style="width: 50px;" onchange="calculate()">
+
 
     <label for="coffeeConsumption">Потребление кофе в месяц (кг):</label>
     <select id="coffeeConsumption" onchange="calculate()">
@@ -103,48 +107,55 @@
       <option value="50+">50+ кг</option>
     </select>
 
+    <label for="PaymentType">Тип оплаты:</label>
+    <select id="PaymentType" onchange="calculate()">
+      <option value="Predoplata">Предоплата</option>
+      <option value="Pofaktu">По факту</option>
+      <option value="Otsrochka">Отсрочка</option>
+    </select>
+
     <div id="result">Результат: 0.00 &#8381;</div>
   </div>
 
   <script>
     function calculate() {
-      const rentMonths = parseInt(document.getElementById("rentMonths").value);
-      document.getElementById("rentMonthsValue").innerText = rentMonths;
+        const productType = document.getElementById("productType").value;
+        const coffeeConsumption = document.getElementById("coffeeConsumption").value;
 
-      const productType = document.getElementById("productType").value;
-      const Equipment = document.getElementById("Equipment").value;
-      const coffeeConsumption = document.getElementById("coffeeConsumption").value;
+        const automat = parseInt(document.getElementById("Automat").value, 10);
+        const odnushka = parseInt(document.getElementById("Odnushka").value, 10);
+        const dvushka = parseInt(document.getElementById("Dvushka").value, 10);
 
-      let basePrice = 100_000; // Base price per month (example)
+        let total_oboroduvanie = automat + odnushka + dvushka;
+        let equipmentPrice = automat * 1500 + odnushka * 2000 + dvushka * 3000;
 
-      const productTypeMap = {
-        "Uganda": 1.5,
-        "Brazil": 1.2,
-        "Ethiopia": 1.8,
-        "Bristol": 1.1,
-        "Poetry": 2.0
-      };
+        const coffeeConsumptionMap = {
+            "5-8": 1.1,
+            "8-12": 1.2,
+            "12-20": 1.3,
+            "20-30": 1.4,
+            "30-50": 1.5,
+            "50+": 1.6,
+        };
 
-      const coffeeConsumptionMap = {
-        "5-8": 1.0,
-        "8-12": 1.2,
-        "12-20": 1.4,
-        "20-30": 1.6,
-        "30-50": 1.8,
-        "50+": 2.0
-      };
+        const productTypeMap = {
+            "Uganda": 3000,
+            "Brazil": 3500,
+            "Ethiopia": 4000,
+            "Bristol": 4500,
+            "Poetry": 5000,
+        };
 
-      const equipmentMap = {
-        "None": 0.0,
-        "Automat": 10_000
-      };
-      // Calculation
-      let totalPrice = (basePrice + equipmentMap[Equipment]) * coffeeConsumptionMap[coffeeConsumption] * productTypeMap[productType] * rentMonths;
+        const rentMonthsFrom = parseInt(document.getElementById("rentMonthsFrom").value, 10);
+        const rentMonthsTo = parseInt(document.getElementById("rentMonthsTo").value, 10);
+        const rentPrice = (rentMonthsTo - rentMonthsFrom + 1) * 30;
 
-      document.getElementById("result").innerText = "Result: " + totalPrice.toFixed(2) + " ₽";
+
+
+        let totalPrice = productTypeMap[productType] * coffeeConsumptionMap[coffeeConsumption] + equipmentPrice + rentPrice
+        document.getElementById("result").innerText = "Результат: " + totalPrice.toFixed(2) + " ₽";
     }
 
-    // Initial calculation
     calculate();
   </script>
 
